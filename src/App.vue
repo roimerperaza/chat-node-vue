@@ -36,7 +36,7 @@ export default {
   methods: {
     clickButton: function (data) {
       // $socket is socket.io-client instance
-      this.$socket.emit('chat_message', data)
+      this.$socket.emit('customEmit', data)
     }
   }
 }
