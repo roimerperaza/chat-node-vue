@@ -12,13 +12,20 @@ export default {
       myVar: ''
     }
   },
+  beforeCreate () {
+    this.sockets.unsubscribe('chat_message')
+  },
   sockets: {
     connect: function () {
       console.log('socket connected')
-      this.sockets.subscribe('chat message', data => {
+      this.sockets.subscribe('chat_message', data => {
         console.log('data', data)
         this.msg = data.message
       })
+    },
+    disconnect: function () {
+      console.log('server disconnected')
+      this.sockets.unsubscribe('chat_message')
     },
     customEmit: function (data) {
       console.log(
@@ -29,7 +36,7 @@ export default {
   methods: {
     clickButton: function (data) {
       // $socket is socket.io-client instance
-      this.$socket.emit('chat message', data)
+      this.$socket.emit('chat_message', data)
     }
   }
 }
